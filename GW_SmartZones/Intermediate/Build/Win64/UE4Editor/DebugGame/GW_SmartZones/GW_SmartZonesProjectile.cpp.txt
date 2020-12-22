@@ -1,0 +1,11 @@
+D:\School\S5\Graduation Work\GW_SmartZones\Intermediate\Build\Win64\UE4Editor\DebugGame\GW_SmartZones\Definitions.GW_SmartZones.h
+D:\School\S5\Graduation Work\GW_SmartZones\Source\GW_SmartZones\GW_SmartZonesProjectile.h
+D:\School\S5\Graduation Work\GW_SmartZones\Intermediate\Build\Win64\UE4Editor\Inc\GW_SmartZones\GW_SmartZonesProjectile.generated.h
+C:\Program Files (x86)\UE_4.26\Engine\Source\Runtime\Engine\Classes\GameFramework/ProjectileMovementComponent.h
+C:\Program Files (x86)\UE_4.26\Engine\Source\Runtime\Engine\Classes\GameFramework/MovementComponent.h
+C:\Program Files (x86)\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\MovementComponent.generated.h
+C:\Program Files (x86)\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\ProjectileMovementComponent.generated.h
+C:\Program Files (x86)\UE_4.26\Engine\Source\Runtime\Engine\Classes\Components/SphereComponent.h
+C:\Program Files (x86)\UE_4.26\Engine\Source\Runtime\Engine\Classes\Components/ShapeComponent.h
+C:\Program Files (x86)\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\ShapeComponent.generated.h
+C:\Program Files (x86)\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\SphereComponent.generated.h

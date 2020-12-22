@@ -1,0 +1,10 @@
+﻿  Building GW_SmartZonesEditor...
+  Using Visual Studio 2019 14.26.28806 toolchain (C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Tools\MSVC\14.26.28801) and Windows 10.0.18362.0 SDK (C:\Program Files (x86)\Windows Kits\10).
+  Building 3 actions with 8 processes...
+    [1/3] UE4Editor-GW_SmartZones-Win64-DebugGame.lib
+       Creating library D:\School\S5\Graduation Work\GW_SmartZones\Intermediate\Build\Win64\UE4Editor\DebugGame\GW_SmartZones\UE4Editor-GW_SmartZones-Win64-DebugGame.lib and object D:\School\S5\Graduation Work\GW_SmartZones\Intermediate\Build\Win64\UE4Editor\DebugGame\GW_SmartZones\UE4Editor-GW_SmartZones-Win64-DebugGame.exp
+    [2/3] UE4Editor-GW_SmartZones-Win64-DebugGame.dll
+       Creating library D:\School\S5\Graduation Work\GW_SmartZones\Intermediate\Build\Win64\UE4Editor\DebugGame\GW_SmartZones\UE4Editor-GW_SmartZones-Win64-DebugGame.suppressed.lib and object D:\School\S5\Graduation Work\GW_SmartZones\Intermediate\Build\Win64\UE4Editor\DebugGame\GW_SmartZones\UE4Editor-GW_SmartZones-Win64-DebugGame.suppressed.exp
+    [3/3] GW_SmartZonesEditor-Win64-DebugGame.target
+  Total time in Parallel executor: 3,92 seconds
+  Total execution time: 5,58 seconds

@@ -1,0 +1,3 @@
+D:\School\S5\Graduation Work\GW_SmartZones\Intermediate\Build\Win64\UE4Editor\DebugGame\GW_SmartZones\Definitions.GW_SmartZones.h
+C:\Program Files (x86)\UE_4.26\Engine\Source\Runtime\CoreUObject\Public\UObject/GeneratedCppIncludes.h
+C:\Program Files (x86)\UE_4.26\Engine\Source\Runtime\CoreUObject\Public\UObject/MetaData.h

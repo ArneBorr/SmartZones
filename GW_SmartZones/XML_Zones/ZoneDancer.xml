@@ -1,0 +1,42 @@
+﻿<?xml version="1.0"?>
+<SmartZone>
+
+   <Trigger>
+        <Condition> MinNPC_1/Condition></Condition>
+        <Condition> AIType_Dancer</Condition>
+   </Trigger>
+   
+  <Roles>
+      <Name>Dancer</Name>
+      <Cardinality>1-1</Cardinality>
+      <Flags>
+          <CanJoinDynamically>0</CanJoinDynamically>
+      </Flags>
+      
+      <Name>Crowd</Name>
+      <Cardinality>0-6</Cardinality>
+      <Flags>
+          <CanJoinDynamically>1</CanJoinDynamically>
+      </Flags>
+  </Roles>
+  
+  <Timeline>
+        <Row> Dancer
+            <Behavior>
+                <Timeframe>0-30</Timeframe>
+                <name>Dance</name>
+                <animation>Dancing</animation>
+            </Behavior>
+        </Row>
+        <Row> Dancer
+            <Behavior>
+                <Timeframe>0-30</Timeframe>
+                <name>Cheer</name>
+                <animation>Cheering</animation>
+            </Behavior>
+        </Row>
+  </Timeline>
+  
+  
+  
+</SmartZone>

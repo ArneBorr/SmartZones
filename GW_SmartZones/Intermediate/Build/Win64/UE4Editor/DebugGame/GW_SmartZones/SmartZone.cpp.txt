@@ -1,0 +1,8 @@
+D:\School\S5\Graduation Work\GW_SmartZones\Intermediate\Build\Win64\UE4Editor\DebugGame\GW_SmartZones\Definitions.GW_SmartZones.h
+D:\School\S5\Graduation Work\GW_SmartZones\Source\GW_SmartZones\SmartZone.h
+C:\Program Files (x86)\UE_4.26\Engine\Source\Runtime\Engine\Classes\Engine/TriggerBox.h
+C:\Program Files (x86)\UE_4.26\Engine\Source\Runtime\Engine\Classes\Engine/TriggerBase.h
+C:\Program Files (x86)\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\TriggerBase.generated.h
+C:\Program Files (x86)\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\TriggerBox.generated.h
+D:\School\S5\Graduation Work\GW_SmartZones\Intermediate\Build\Win64\UE4Editor\Inc\GW_SmartZones\SmartZone.generated.h
+C:\Program Files (x86)\UE_4.26\Engine\Source\Runtime\Engine\Public\DrawDebugHelpers.h
