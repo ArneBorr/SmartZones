@@ -3,6 +3,11 @@
 #include "SmartZone.h"
 #include "DrawDebugHelpers.h"
 
+ASmartZone::ASmartZone()
+{
+	m_pRoleManager = CreateDefaultSubobject<URoleManager>("RoleManager");
+}
+
 void ASmartZone::BeginPlay()
 {
 	Super::BeginPlay();

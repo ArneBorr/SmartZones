@@ -2,13 +2,16 @@
 
 #include "CoreMinimal.h"
 #include "Engine/TriggerBox.h"
+#include "RoleManager.h"
 #include "SmartZone.generated.h"
+
 
 UCLASS()
 class GW_SMARTZONES_API ASmartZone final : public ATriggerBox
 {
 	GENERATED_BODY()
 public:
+	ASmartZone();
 	void BeginPlay() override; 
 
 	UFUNCTION()
@@ -17,7 +20,8 @@ public:
 		void OnOverlapEnd(class AActor* OverlappedActor, class AActor* OtherActor);
 
 private:
-
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "General", DisplayName = "Role Manager", meta = (AllowPrivateAccess = true))
+		URoleManager* m_pRoleManager;
 	TArray<AActor*> m_pNPCsInZone;
 
 	UPROPERTY(EditAnywhere, Category = "General", DisplayName = "Debug Mode", meta = (AllowPrivateAccess = true))
