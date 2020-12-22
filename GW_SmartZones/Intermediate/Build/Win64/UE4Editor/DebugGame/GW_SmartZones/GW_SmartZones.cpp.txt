@@ -1,2 +1,0 @@
-D:\School\S5\Graduation Work\GW_SmartZones\Intermediate\Build\Win64\UE4Editor\DebugGame\GW_SmartZones\Definitions.GW_SmartZones.h
-D:\School\S5\Graduation Work\GW_SmartZones\Source\GW_SmartZones\GW_SmartZones.h

@@ -1,9 +1,0 @@
-D:\School\S5\Graduation Work\GW_SmartZones\Intermediate\Build\Win64\UE4Editor\DebugGame\GW_SmartZones\Definitions.GW_SmartZones.h
-C:\Program Files (x86)\UE_4.26\Engine\Source\Runtime\CoreUObject\Public\UObject/GeneratedCppIncludes.h
-C:\Program Files (x86)\UE_4.26\Engine\Source\Runtime\CoreUObject\Public\UObject/MetaData.h
-D:\School\S5\Graduation Work\GW_SmartZones\Source\GW_SmartZones/GW_SmartZonesGameMode.h
-C:\Program Files (x86)\UE_4.26\Engine\Source\Runtime\Engine\Classes\GameFramework/GameModeBase.h
-C:\Program Files (x86)\UE_4.26\Engine\Source\Runtime\Engine\Classes\Engine/ServerStatReplicator.h
-C:\Program Files (x86)\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\ServerStatReplicator.generated.h
-C:\Program Files (x86)\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\GameModeBase.generated.h
-D:\School\S5\Graduation Work\GW_SmartZones\Intermediate\Build\Win64\UE4Editor\Inc\GW_SmartZones\GW_SmartZonesGameMode.generated.h
