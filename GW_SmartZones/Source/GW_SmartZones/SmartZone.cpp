@@ -3,17 +3,13 @@
 #include "SmartZone.h"
 #include "DrawDebugHelpers.h"
 
-ASmartZone::ASmartZone()
-{
-	
-	//OnActorEndOverlap.AddDynamic(this, &ASmartZone::OnOverlapEnd);
-}
-
 void ASmartZone::BeginPlay()
 {
 	Super::BeginPlay();
 
 	OnActorBeginOverlap.AddDynamic(this, &ASmartZone::OnOverlapBegin);
+	OnActorEndOverlap.AddDynamic(this, &ASmartZone::OnOverlapEnd);
+
 	if (m_IsInDebugMode)
 	{
 		FVector boxExtent{}, origin{};
