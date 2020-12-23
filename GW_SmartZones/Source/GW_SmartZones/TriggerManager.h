@@ -1,15 +1,29 @@
-// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
 #include "CoreMinimal.h"
+#include "UObject/Object.h"
+#include "TriggerManager.generated.h"
 
-/**
- * 
- */
-class GW_SMARTZONES_API TriggerManager
+UCLASS()
+class GW_SMARTZONES_API UCondition : public UObject
 {
-public:
-	TriggerManager();
-	~TriggerManager();
+	GENERATED_BODY()
+
+private:
+	//TFunction<bool(args...)> m_Function;
+};
+
+
+UCLASS()
+class GW_SMARTZONES_API UTrigger : public UObject
+{
+	GENERATED_BODY()
+};
+
+UCLASS()
+class GW_SMARTZONES_API UTriggerManager : public UObject
+{
+	GENERATED_BODY()
+		
 };

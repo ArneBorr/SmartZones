@@ -19,6 +19,8 @@ public:
 	UFUNCTION()
 		void OnOverlapEnd(class AActor* OverlappedActor, class AActor* OtherActor);
 
+	int GetNrOfNPCsInZone() const { return m_pNPCsInZone.Num(); }
+
 private:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "General", DisplayName = "Role Manager", meta = (AllowPrivateAccess = true))
 		URoleManager* m_pRoleManager;
