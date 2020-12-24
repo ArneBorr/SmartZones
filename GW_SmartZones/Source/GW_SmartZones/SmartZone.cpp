@@ -5,6 +5,8 @@
 
 ASmartZone::ASmartZone()
 {
+	PrimaryActorTick.bCanEverTick = true;
+
 	m_pRoleManager = CreateDefaultSubobject<URoleManager>("RoleManager");
 	m_pTriggerManager = CreateDefaultSubobject<UTriggerManager>("TriggerManager");
 }
@@ -12,6 +14,7 @@ ASmartZone::ASmartZone()
 void ASmartZone::BeginPlay()
 {
 	Super::BeginPlay();
+	m_pTriggerManager->SetSmartZone(this);
 	OnActorBeginOverlap.AddDynamic(this, &ASmartZone::OnOverlapBegin);
 	OnActorEndOverlap.AddDynamic(this, &ASmartZone::OnOverlapEnd);
 
@@ -20,6 +23,16 @@ void ASmartZone::BeginPlay()
 		FVector boxExtent{}, origin{};
 		GetActorBounds(false, origin, boxExtent);
 		DrawDebugBox(GetWorld(), GetActorLocation(), boxExtent, FColor::Purple, true, -1, 0, 5);
+	}
+}
+
+void ASmartZone::Tick(float elapsedSec)
+{
+	Super::Tick(elapsedSec);
+	
+	if (m_pTriggerManager->IsTriggerTriggered())
+	{
+		UE_LOG(LogTemp, Warning, TEXT("YUUUUUUP"));
 	}
 }
 

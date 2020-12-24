@@ -14,11 +14,13 @@ class GW_SMARTZONES_API ASmartZone final : public ATriggerBox
 public:
 	ASmartZone();
 	void BeginPlay() override; 
+	void Tick(float elapsedSec) override;
 
 	UFUNCTION()
 		void OnOverlapBegin(class AActor* OverlappedActor, class AActor* OtherActor);
 	UFUNCTION()
 		void OnOverlapEnd(class AActor* OverlappedActor, class AActor* OtherActor);
+
 
 	int GetNrOfNPCsInZone() const { return m_pNPCsInZone.Num(); }
 

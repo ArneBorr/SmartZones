@@ -11,10 +11,7 @@ class GW_SMARTZONES_API Condition final
 public:
 	Condition(TFunction<bool(ASmartZone*)> f, const FString& name) : m_Function(f), m_Name(name) {};
 
-	bool IsTrue(ASmartZone* pSmartZone)
-	{
-		return m_Function(pSmartZone);
-	}
+	bool IsTrue(ASmartZone* pSmartZone);
 
 	const FString& GetName() const { return m_Name; }
 

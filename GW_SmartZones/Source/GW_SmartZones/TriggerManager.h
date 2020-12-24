@@ -11,6 +11,9 @@ class GW_SMARTZONES_API UTrigger : public UObject
 {
 	GENERATED_BODY()
 
+public:
+	bool IsTriggered(class ASmartZone*) const;
+
 	UFUNCTION(BlueprintCallable)
 	void AddCondition(UConditionRepository* pRepo, const FString& name)
 	{ 
@@ -30,9 +33,14 @@ class GW_SMARTZONES_API UTriggerManager : public UObject
 {
 	GENERATED_BODY()
 		
+public:
+	bool IsTriggerTriggered() const;
+	void SetSmartZone(class ASmartZone*);
+
 	UFUNCTION(BlueprintCallable)
 		void AddTrigger(UTrigger* pTrigger);
 
 private:
 	TArray<UTrigger*> m_pTriggers;
+	class ASmartZone* m_pSmartZone;
 };
