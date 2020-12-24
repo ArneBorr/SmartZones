@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0"?>
-<SmartZone>
-
+<SmartZone> 
   <Role>
       <Name>Dancer</Name>
       <Cardinality>1-1</Cardinality>
@@ -17,8 +16,9 @@
   </Role>
   
   <Trigger>
-        <Condition> MinNPC_1</Condition>
-        <Condition> AIType_Dancer</Condition>
+		<NrOfConditions>2</NrOfConditions>	
+		<Condition0> MinNPC_1</Condition0>
+		<Condition1> AIType_Dancer</Condition1>
    </Trigger>
   
   <Timeline>
@@ -36,8 +36,5 @@
                 <animation>Cheering</animation>
             </Behavior>
         </Row>
-  </Timeline>
-  
-  
-  
+  </Timeline> 
 </SmartZone>

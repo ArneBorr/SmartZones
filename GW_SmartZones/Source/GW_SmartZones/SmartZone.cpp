@@ -6,12 +6,12 @@
 ASmartZone::ASmartZone()
 {
 	m_pRoleManager = CreateDefaultSubobject<URoleManager>("RoleManager");
+	m_pTriggerManager = CreateDefaultSubobject<UTriggerManager>("TriggerManager");
 }
 
 void ASmartZone::BeginPlay()
 {
 	Super::BeginPlay();
-
 	OnActorBeginOverlap.AddDynamic(this, &ASmartZone::OnOverlapBegin);
 	OnActorEndOverlap.AddDynamic(this, &ASmartZone::OnOverlapEnd);
 
