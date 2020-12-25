@@ -9,6 +9,7 @@ ASmartZone::ASmartZone()
 
 	m_pRoleManager = CreateDefaultSubobject<URoleManager>("RoleManager");
 	m_pTriggerManager = CreateDefaultSubobject<UTriggerManager>("TriggerManager");
+	m_pTimeline = CreateDefaultSubobject<UTimelineSZ>("Timeline");
 }
 
 void ASmartZone::BeginPlay()
