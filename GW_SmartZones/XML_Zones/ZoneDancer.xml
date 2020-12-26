@@ -16,9 +16,8 @@
   </Role>
   
   <Trigger>
-		<NrOfConditions>2</NrOfConditions>	
-		<Condition0> MinNPC_1</Condition0>
-		<Condition1> AIType_Dancer</Condition1>
+		<NrOfConditions>1</NrOfConditions>	
+		<Condition0> MinNPC_2</Condition0>
    </Trigger>
   
   <Timeline>

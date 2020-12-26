@@ -5,8 +5,10 @@
 UConditionRepository::UConditionRepository()
 {
 	auto OneNPCInZone = [](ASmartZone* pSmartZone)->bool { return pSmartZone->GetNrOfNPCsInZone() >= 1; };
+	auto TwoNPCInZone = [](ASmartZone* pSmartZone)->bool { return pSmartZone->GetNrOfNPCsInZone() >= 2; };
 	
 	m_pConditions.Add(new Condition(OneNPCInZone, "MinNPC_1"));
+	m_pConditions.Add(new Condition(TwoNPCInZone, "MinNPC_2"));
 }
 
 Condition* UConditionRepository::GetCondition(const FString& name) const

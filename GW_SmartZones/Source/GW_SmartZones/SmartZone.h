@@ -26,7 +26,7 @@ public:
 	int GetNrOfNPCsInZone() const { return m_pNPCsInZone.Num(); }
 
 private:
-	TArray<AActor*> m_pNPCsInZone;
+	TArray<class ANPCCharacter*> m_pNPCsInZone;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "General", DisplayName = "Role Manager", meta = (AllowPrivateAccess = true))
 		URoleManager* m_pRoleManager;
@@ -37,4 +37,6 @@ private:
 
 	UPROPERTY(EditAnywhere, Category = "General", DisplayName = "Debug Mode", meta = (AllowPrivateAccess = true))
 		bool m_IsInDebugMode = false;
+
+	bool m_IsActive;
 };
