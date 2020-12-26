@@ -26,7 +26,7 @@
             <Behavior>
                 <Timeframe>0-30</Timeframe>
                 <name>Dance</name>
-                <animation>Dancing</animation>
+                <animation>Breakdance</animation>
             </Behavior>
         </Row>
         <Row> Crowd

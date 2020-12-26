@@ -25,6 +25,8 @@ class GW_SMARTZONES_API UTimelineRowSZ : public UObject
 	GENERATED_BODY()
 public:
 	UFUNCTION(BlueprintCallable)
+		void Initialize(const FString& name);
+	UFUNCTION(BlueprintCallable)
 		void AddBehaviour(UTimelineBehaviorSZ* pBehavior) { if (pBehavior) m_pBehaviours.Add(pBehavior); };
 
 private:
