@@ -32,12 +32,13 @@ void ASmartZone::Tick(float elapsedSec)
 			if (m_pRoleManager->AssignRoles(m_pNPCsInZone))
 			{
 				m_IsActive = true;
+				m_pTimeline->Start(m_pNPCsInZone, this);
 			}
 		}
 	}
 	else
 	{
-		
+		m_pTimeline->Update(this, elapsedSec);
 	}
 
 	if (m_IsInDebugMode)
@@ -78,4 +79,9 @@ void ASmartZone::OnOverlapEnd(AActor* pOverlappedActor, AActor* pOtherActor)
 		if (m_IsInDebugMode)
 			UE_LOG(LogTemp, Warning, TEXT("ASmartZone::OnOverlapEnd : NPC Exited"));		
 	}
+}
+
+void ASmartZone::UpdatePublicActors_Implementation()
+{
+	//Implementation that gets called, if not overriden by Blueprint class
 }

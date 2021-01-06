@@ -19,20 +19,42 @@
 		<NrOfConditions>1</NrOfConditions>	
 		<Condition0> MinNPC_2</Condition0>
    </Trigger>
+   
+   <Actors>
+		<NrOfActors>1</NrOfActors>	
+		<Actor0>LocDancer</Actor0>
+   </Actors>
   
   <Timeline>
         <Row> Dancer
             <Behavior>
-                <Timeframe>0-30</Timeframe>
-                <name>Dance</name>
-                <animation>Breakdance</animation>
+                <Name>Walk</Name>
+                <Action>MoveTo_LocDancer</Action>
+				<Sequence>1</Sequence>
+				<TransitionType>EndOfAction</TransitionType>
+            </Behavior>
+			<Behavior>
+                <Duration>20</Duration>
+                <Name>Dance</Name>
+                <Animation>Dance</Animation>
+				<Sequence>2</Sequence>
+				<TransitionType>EndOfDuration</TransitionType>
             </Behavior>
         </Row>
+		
         <Row> Crowd
+			<Behavior>
+                <Name>Idle</Name>
+				<Action>Face_Role_Dancer</Action>
+				<Sequence>1</Sequence>
+				<TransitionType>EndOfSequence</TransitionType>
+            </Behavior>
             <Behavior>
-                <Timeframe>0-30</Timeframe>
-                <name>Cheer</name>
-                <animation>Cheering</animation>
+                <Name>Cheer</Name>
+                <Animation>Cheering</Animation>
+				<Action>Face_Role_Dancer</Action>
+				<Sequence>2</Sequence>
+				<TransitionType>EndOfSequence</TransitionType>
             </Behavior>
         </Row>
   </Timeline> 

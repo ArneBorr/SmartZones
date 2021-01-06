@@ -15,10 +15,16 @@ public:
 	void SetRole(const FRole& role);
 	void SetInteracting(bool isInteracting);
 
+	UFUNCTION(BlueprintNativeEvent)
+		void SetAction(class ASmartZone* pSmartZone, const FString& action);
+
 	UFUNCTION(BlueprintCallable)
 		const FRole& GetRole();
 	UFUNCTION(BlueprintCallable)
 		bool IsInteracting();
+	
+	bool IsBehaviorCompleted() const;
+	void SetBehaviorCompleted(bool isCompleted);
 
 protected:
 	virtual void BeginPlay() override;
@@ -28,4 +34,6 @@ protected:
 private:
 	FRole m_Role;
 	bool m_IsInteracting = false;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		bool m_IsBehaviorCompleted = false;
 };

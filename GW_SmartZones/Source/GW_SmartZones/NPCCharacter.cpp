@@ -29,6 +29,11 @@ void ANPCCharacter::SetInteracting(bool isInteracting)
 	m_IsInteracting = isInteracting;
 }
 
+void ANPCCharacter::SetAction_Implementation(class ASmartZone* pSmartZone, const FString& action)
+{
+	//Implementation that gets called, if not overriden by Blueprint class
+}
+
 const FRole& ANPCCharacter::GetRole()
 {
 	return m_Role;
@@ -37,5 +42,15 @@ const FRole& ANPCCharacter::GetRole()
 bool ANPCCharacter::IsInteracting()
 {
 	return m_IsInteracting;
+}
+
+bool ANPCCharacter::IsBehaviorCompleted() const
+{
+	return m_IsBehaviorCompleted;
+}
+
+void ANPCCharacter::SetBehaviorCompleted(bool isCompleted)
+{
+	m_IsBehaviorCompleted = isCompleted;
 }
 

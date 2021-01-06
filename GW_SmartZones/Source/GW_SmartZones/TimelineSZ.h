@@ -4,19 +4,34 @@
 #include "UObject/NoExportTypes.h"
 #include "TimelineSZ.generated.h"
 
+UENUM(BlueprintType)
+enum TransitionType
+{
+	EndOfSequence,   
+	EndOfAction,
+	EndOfDuration
+};
+
 UCLASS(BlueprintType)
 class GW_SMARTZONES_API UTimelineBehaviorSZ : public UObject
 {
 	GENERATED_BODY()
 public:
 	UFUNCTION(BlueprintCallable)
-		void Initialize(const FString& name, float timeStart, float timeEnd, class UAnimationAsset* pAnim = nullptr);
+		void Initialize(class UAnimationAsset* pAnim, const FString& name, const FString& action, TransitionType transType, float duration, int seq);
 
+	void Execute(class ANPCCharacter* pNPC, class ASmartZone* pSmartZone);
+	bool IsCompleted();
+
+	int GetSequence() const { return m_Sequence; };
 private:
+	class ANPCCharacter* m_pNPC;
 	FString m_Name;
-	class UAnimationAsset* m_pAnimation;
-	float m_TimeStart;
-	float m_TimeEnd;
+	FString m_Action;
+	class UAnimationAsset* m_pAnimation = nullptr;
+	TransitionType m_TransType;
+	float m_Duration;
+	int m_Sequence;
 };
 
 UCLASS(BlueprintType)
@@ -27,10 +42,17 @@ public:
 	UFUNCTION(BlueprintCallable)
 		void Initialize(const FString& name);
 	UFUNCTION(BlueprintCallable)
-		void AddBehaviour(UTimelineBehaviorSZ* pBehavior) { if (pBehavior) m_pBehaviours.Add(pBehavior); };
+		void AddBehaviour(UTimelineBehaviorSZ* pBehavior) { if (pBehavior) m_pBehaviors.Add(pBehavior); };
+
+	void AddNPC(ANPCCharacter* pNPC);
+	bool StartSequence(class ASmartZone* pSmartZone, int seq);
+	bool IsSequenceCompleted();
+	const FString& GetName() { return m_Name; };
 
 private:
-	TArray<UTimelineBehaviorSZ*> m_pBehaviours;
+	TArray<UTimelineBehaviorSZ*> m_pBehaviors;
+	TArray<ANPCCharacter*> m_pNPCs;
+	UTimelineBehaviorSZ* m_pActiveBehavior;
 	FString m_Name;
 };
 
@@ -42,6 +64,12 @@ class GW_SMARTZONES_API UTimelineSZ : public UObject
 public:
 	UFUNCTION(BlueprintCallable)
 		void AddRow(UTimelineRowSZ* pRow) { if (pRow) m_pRows.Add(pRow); };
+
+	void Start(const TArray<class ANPCCharacter*>& pNPCsInZone, class ASmartZone* pSmartZone);
+	void Update(class ASmartZone* pSmartZone, float elapsedSec);
 private:
 	TArray<UTimelineRowSZ*> m_pRows;
+	
+	unsigned int m_CurrentSequence = 1;
+	bool m_IsActive = false;
 };

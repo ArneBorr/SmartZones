@@ -21,6 +21,8 @@ public:
 		void OnOverlapBegin(class AActor* OverlappedActor, class AActor* OtherActor);
 	UFUNCTION()
 		void OnOverlapEnd(class AActor* OverlappedActor, class AActor* OtherActor);
+	UFUNCTION(CallInEditor, BlueprintNativeEvent, Category = "General", DisplayName = "Update Public Variables")
+		void UpdatePublicActors();
 
 
 	int GetNrOfNPCsInZone() const { return m_pNPCsInZone.Num(); }
