@@ -17,6 +17,8 @@ public:
 
 	UFUNCTION(BlueprintNativeEvent)
 		void SetAction(class ASmartZone* pSmartZone, const FString& action);
+	UFUNCTION(BlueprintNativeEvent)
+		void ContinueAnimBlueprint();
 
 	UFUNCTION(BlueprintCallable)
 		const FRole& GetRole();
@@ -32,6 +34,8 @@ protected:
 	virtual void Tick(float DeltaTime) override;
 
 private:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		AActor* m_pTarget = nullptr;
 	FRole m_Role;
 	bool m_IsInteracting = false;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))

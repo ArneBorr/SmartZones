@@ -21,17 +21,22 @@ public:
 		void Initialize(class UAnimationAsset* pAnim, const FString& name, const FString& action, TransitionType transType, float duration, int seq);
 
 	void Execute(class ANPCCharacter* pNPC, class ASmartZone* pSmartZone);
+	void Exit();
 	bool IsCompleted();
 
 	int GetSequence() const { return m_Sequence; };
 private:
-	class ANPCCharacter* m_pNPC;
 	FString m_Name;
 	FString m_Action;
+	FTimerHandle m_TimerHandle;
+	class ANPCCharacter* m_pNPC = nullptr;
 	class UAnimationAsset* m_pAnimation = nullptr;
 	TransitionType m_TransType;
 	float m_Duration;
+	float m_Timer = 0;
 	int m_Sequence;
+
+	void UpdateTimer();
 };
 
 UCLASS(BlueprintType)
@@ -46,6 +51,7 @@ public:
 
 	void AddNPC(ANPCCharacter* pNPC);
 	bool StartSequence(class ASmartZone* pSmartZone, int seq);
+	void EndBehavior();
 	bool IsSequenceCompleted();
 	const FString& GetName() { return m_Name; };
 
@@ -66,7 +72,7 @@ public:
 		void AddRow(UTimelineRowSZ* pRow) { if (pRow) m_pRows.Add(pRow); };
 
 	void Start(const TArray<class ANPCCharacter*>& pNPCsInZone, class ASmartZone* pSmartZone);
-	void Update(class ASmartZone* pSmartZone, float elapsedSec);
+	bool Update(class ASmartZone* pSmartZone, float elapsedSec);
 private:
 	TArray<UTimelineRowSZ*> m_pRows;
 	

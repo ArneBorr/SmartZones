@@ -34,6 +34,11 @@ void ANPCCharacter::SetAction_Implementation(class ASmartZone* pSmartZone, const
 	//Implementation that gets called, if not overriden by Blueprint class
 }
 
+void ANPCCharacter::ContinueAnimBlueprint_Implementation()
+{
+	//Implementation that gets called, if not overriden by Blueprint class
+}
+
 const FRole& ANPCCharacter::GetRole()
 {
 	return m_Role;

@@ -25,6 +25,9 @@ void ASmartZone::Tick(float elapsedSec)
 {
 	Super::Tick(elapsedSec);
 
+	if (m_IsCompleted)
+		return;
+
 	if (!m_IsActive)
 	{
 		if (m_pTriggerManager->IsTriggerTriggered())
@@ -38,7 +41,10 @@ void ASmartZone::Tick(float elapsedSec)
 	}
 	else
 	{
-		m_pTimeline->Update(this, elapsedSec);
+		if (!m_pTimeline->Update(this, elapsedSec))
+		{
+			m_IsCompleted = true;
+		}
 	}
 
 	if (m_IsInDebugMode)
@@ -46,11 +52,6 @@ void ASmartZone::Tick(float elapsedSec)
 		FVector boxExtent{}, origin{};
 		GetActorBounds(false, origin, boxExtent);
 		DrawDebugBox(GetWorld(), GetActorLocation(), boxExtent, m_IsActive ? FColor::Green : FColor::Red, true, -1, 0, 5);
-
-		for (ANPCCharacter* pNPC : m_pNPCsInZone)
-		{
-
-		}
 	}
 }
 

@@ -34,7 +34,7 @@
 				<TransitionType>EndOfAction</TransitionType>
             </Behavior>
 			<Behavior>
-                <Duration>20</Duration>
+                <Duration>5</Duration>
                 <Name>Dance</Name>
                 <Animation>Dance</Animation>
 				<Sequence>2</Sequence>

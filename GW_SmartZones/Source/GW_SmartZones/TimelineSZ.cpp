@@ -4,6 +4,7 @@
 #include "NPCCharacter.h"
 #include "RoleManager.h"
 #include "SmartZone.h"
+#include "Animation/AnimSingleNodeInstance.h"
 
 //Behavior
 
@@ -25,10 +26,36 @@ void UTimelineBehaviorSZ::Execute(ANPCCharacter* pNPC, ASmartZone* pSmartZone)
 	{
 		pNPC->GetMesh()->PlayAnimation(m_pAnimation, true);
 	}
+
+	GetWorld()->GetTimerManager().SetTimer(m_TimerHandle, this, &UTimelineBehaviorSZ::UpdateTimer, 1, true, 0);
+}
+
+void UTimelineBehaviorSZ::Exit()
+{
+	if (m_pAnimation)
+	{
+		m_pNPC->ContinueAnimBlueprint();
+	}
+}
+
+void UTimelineBehaviorSZ::UpdateTimer()
+{
+	m_Timer += 1;
 }
 
 bool UTimelineBehaviorSZ::IsCompleted()
 {
+	switch (m_TransType)
+	{
+		case TransitionType::EndOfAction:
+			m_pNPC->IsBehaviorCompleted();
+			break;
+		case TransitionType::EndOfDuration:
+			UE_LOG(LogTemp, Warning, TEXT("%f"), m_Timer);
+			return m_Duration <= m_Timer;
+			break;
+	}
+
 	return m_pNPC->IsBehaviorCompleted();
 }
 
@@ -57,7 +84,14 @@ bool UTimelineRowSZ::StartSequence(ASmartZone* pSmartZone, int seq)
 	}
 
 	if (!m_pActiveBehavior)
+	{
+		for (ANPCCharacter* pNPC : m_pNPCs)
+		{
+			pNPC->SetInteracting(false);			
+		}
+
 		return false;
+	}
 
 	for (ANPCCharacter* pNPC : m_pNPCs)
 	{			
@@ -66,6 +100,11 @@ bool UTimelineRowSZ::StartSequence(ASmartZone* pSmartZone, int seq)
 	}
 
 	return true;
+}
+
+void UTimelineRowSZ::EndBehavior()
+{
+	m_pActiveBehavior->Exit();
 }
 
 bool UTimelineRowSZ::IsSequenceCompleted()
@@ -94,7 +133,7 @@ void UTimelineSZ::Start(const TArray<ANPCCharacter*>& pNPCsInZone, ASmartZone* p
 	}
 }
 
-void UTimelineSZ::Update(class ASmartZone* pSmartZone, float elapsedSec)
+bool UTimelineSZ::Update(class ASmartZone* pSmartZone, float elapsedSec)
 {
 	bool isRowCompleted = false;
 	for (UTimelineRowSZ* pRow : m_pRows)
@@ -104,11 +143,20 @@ void UTimelineSZ::Update(class ASmartZone* pSmartZone, float elapsedSec)
 
 	if (isRowCompleted)
 	{
-		++m_CurrentSequence;
+		++m_CurrentSequence; 
+		bool hasTimelineEnded = false;
 		for (UTimelineRowSZ* pRow : m_pRows)
 		{
-			pRow->StartSequence(pSmartZone, m_CurrentSequence);
+			pRow->EndBehavior();
+			hasTimelineEnded |= !pRow->StartSequence(pSmartZone, m_CurrentSequence);
+		}
+
+		if (hasTimelineEnded)
+		{
+			return false;
 		}
 	}
+
+	return true;
 }
 
