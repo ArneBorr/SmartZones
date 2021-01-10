@@ -27,7 +27,8 @@ void UTimelineBehaviorSZ::Execute(ANPCCharacter* pNPC, ASmartZone* pSmartZone)
 		pNPC->GetMesh()->PlayAnimation(m_pAnimation, true);
 	}
 
-	GetWorld()->GetTimerManager().SetTimer(m_TimerHandle, this, &UTimelineBehaviorSZ::UpdateTimer, 1, true, 0);
+	if (m_TransType == TransitionType::EndOfDuration)
+		GetWorld()->GetTimerManager().SetTimer(m_TimerHandle, this, &UTimelineBehaviorSZ::UpdateTimer, 1, true, 0);
 }
 
 void UTimelineBehaviorSZ::Exit()
@@ -53,6 +54,9 @@ bool UTimelineBehaviorSZ::IsCompleted()
 		case TransitionType::EndOfDuration:
 			UE_LOG(LogTemp, Warning, TEXT("%f"), m_Timer);
 			return m_Duration <= m_Timer;
+			break;
+		case TransitionType::EndOfSequence:;
+			return false;
 			break;
 	}
 
@@ -104,7 +108,8 @@ bool UTimelineRowSZ::StartSequence(ASmartZone* pSmartZone, int seq)
 
 void UTimelineRowSZ::EndBehavior()
 {
-	m_pActiveBehavior->Exit();
+	if (m_pActiveBehavior)
+		m_pActiveBehavior->Exit();
 }
 
 bool UTimelineRowSZ::IsSequenceCompleted()
@@ -144,14 +149,14 @@ bool UTimelineSZ::Update(class ASmartZone* pSmartZone, float elapsedSec)
 	if (isRowCompleted)
 	{
 		++m_CurrentSequence; 
-		bool hasTimelineEnded = false;
+		bool shouldTimelineContinue = false;
 		for (UTimelineRowSZ* pRow : m_pRows)
 		{
 			pRow->EndBehavior();
-			hasTimelineEnded |= !pRow->StartSequence(pSmartZone, m_CurrentSequence);
+			shouldTimelineContinue |= pRow->StartSequence(pSmartZone, m_CurrentSequence);
 		}
 
-		if (hasTimelineEnded)
+		if (!shouldTimelineContinue)
 		{
 			return false;
 		}

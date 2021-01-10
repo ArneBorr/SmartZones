@@ -28,16 +28,28 @@ void ASmartZone::Tick(float elapsedSec)
 	if (m_IsCompleted)
 		return;
 
+	bool hasScanned = false;
+
 	if (!m_IsActive)
 	{
-		if (m_pTriggerManager->IsTriggerTriggered())
-		{			
-			if (m_pRoleManager->AssignRoles(m_pNPCsInZone))
+		m_ScanTimer += elapsedSec;
+
+		if (m_ScanTimer >= m_ScanInterval)
+		{
+			FVector boxExtent{}, origin{};
+			GetActorBounds(false, origin, boxExtent);
+			DrawDebugBox(GetWorld(), GetActorLocation(), boxExtent, FColor::Yellow, false, 0.5f, 0, 5);
+
+			m_ScanTimer = 0;
+			if (m_pTriggerManager->IsTriggerTriggered())
 			{
-				m_IsActive = true;
-				m_pTimeline->Start(m_pNPCsInZone, this);
+				if (m_pRoleManager->AssignRoles(m_pNPCsInZone))
+				{
+					m_IsActive = true;
+					m_pTimeline->Start(m_pNPCsInZone, this);
+				}
 			}
-		}
+		}	
 	}
 	else
 	{
@@ -51,7 +63,7 @@ void ASmartZone::Tick(float elapsedSec)
 	{
 		FVector boxExtent{}, origin{};
 		GetActorBounds(false, origin, boxExtent);
-		DrawDebugBox(GetWorld(), GetActorLocation(), boxExtent, m_IsActive ? FColor::Green : FColor::Red, true, -1, 0, 5);
+		//DrawDebugBox(GetWorld(), GetActorLocation(), boxExtent, m_IsActive ? FColor::Green : FColor::Red, true, -1, 0, 5);
 	}
 }
 

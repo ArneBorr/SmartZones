@@ -21,8 +21,9 @@
    </Trigger>
    
    <Actors>
-		<NrOfActors>1</NrOfActors>	
+		<NrOfActors>2</NrOfActors>	
 		<Actor0>LocDancer</Actor0>
+		<Actor1>FaceCrowd</Actor1>
    </Actors>
   
   <Timeline>
@@ -34,26 +35,26 @@
 				<TransitionType>EndOfAction</TransitionType>
             </Behavior>
 			<Behavior>
-                <Duration>5</Duration>
+                <Name>FaceCrowd</Name>
+                <Action>Face_FaceCrowd</Action>
+				<Sequence>2</Sequence>
+				<TransitionType>EndOfAction</TransitionType>
+            </Behavior>
+			<Behavior>
+                <Duration>20</Duration>
                 <Name>Dance</Name>
                 <Animation>Dance</Animation>
-				<Sequence>2</Sequence>
+				<Sequence>3</Sequence>
 				<TransitionType>EndOfDuration</TransitionType>
             </Behavior>
         </Row>
 		
         <Row> Crowd
-			<Behavior>
-                <Name>Idle</Name>
-				<Action>Face_Role_Dancer</Action>
-				<Sequence>1</Sequence>
-				<TransitionType>EndOfSequence</TransitionType>
-            </Behavior>
             <Behavior>
                 <Name>Cheer</Name>
                 <Animation>Cheering</Animation>
-				<Action>Face_Role_Dancer</Action>
-				<Sequence>2</Sequence>
+				<Action>Face_LocDancer</Action>
+				<Sequence>3</Sequence>
 				<TransitionType>EndOfSequence</TransitionType>
             </Behavior>
         </Row>

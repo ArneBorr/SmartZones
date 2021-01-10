@@ -40,7 +40,7 @@ private:
 	UPROPERTY(EditAnywhere, Category = "General", DisplayName = "Debug Mode", meta = (AllowPrivateAccess = true))
 		float m_ScanInterval = false;
 
-	float m_Timer = 0;
+	float m_ScanTimer = 0;
 
 	UPROPERTY(EditAnywhere, Category = "General", DisplayName = "Debug Mode", meta = (AllowPrivateAccess = true))
 		bool m_IsInDebugMode = false;
