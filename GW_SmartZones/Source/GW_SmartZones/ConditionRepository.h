@@ -2,6 +2,7 @@
 
 #include "CoreMinimal.h"
 #include "UObject/Object.h"
+#include <functional>
 #include "ConditionRepository.generated.h"
 
 class ASmartZone;
@@ -9,14 +10,16 @@ class ASmartZone;
 class GW_SMARTZONES_API Condition final
 {
 public:
-	Condition(TFunction<bool(ASmartZone*)> f, const FString& name) : m_Function(f), m_Name(name) {};
+	//Condition(TFunction<bool(ASmartZone*)> f, const FString& name) : m_Function(f), m_Name(name) {};
+	Condition(std::function<bool(ASmartZone*)> f, const FString& name) : m_Function(f), m_Name(name) {};
 
 	bool IsTrue(ASmartZone* pSmartZone);
 
 	const FString& GetName() const { return m_Name; }
 
 private:
-	TFunction<bool(ASmartZone*)> m_Function;
+	//TFunction<bool(ASmartZone*)> m_Function;
+	std::function<bool(ASmartZone*)> m_Function;
 	FString m_Name;
 };
 

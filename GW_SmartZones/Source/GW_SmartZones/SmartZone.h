@@ -38,7 +38,7 @@ private:
 		UTimelineSZ* m_pTimeline;
 
 	UPROPERTY(EditAnywhere, Category = "General", DisplayName = "Debug Mode", meta = (AllowPrivateAccess = true))
-		float m_ScanInterval = false;
+		float m_ScanInterval = 0.5f;
 
 	float m_ScanTimer = 0;
 

@@ -4,8 +4,8 @@
 
 UConditionRepository::UConditionRepository()
 {
-	auto OneNPCInZone = [](ASmartZone* pSmartZone)->bool { return pSmartZone->GetNrOfNPCsInZone() >= 1; };
-	auto TwoNPCInZone = [](ASmartZone* pSmartZone)->bool { return pSmartZone->GetNrOfNPCsInZone() >= 2; };
+	std::function<bool(ASmartZone* pSmartZone)> OneNPCInZone = [](ASmartZone* pSmartZone)->bool { return pSmartZone->GetNrOfNPCsInZone() >= 1; };
+	std::function<bool(ASmartZone* pSmartZone)> TwoNPCInZone = [](ASmartZone* pSmartZone)->bool { return pSmartZone->GetNrOfNPCsInZone() >= 2; };
 	
 	m_pConditions.Add(new Condition(OneNPCInZone, "MinNPC_1"));
 	m_pConditions.Add(new Condition(TwoNPCInZone, "MinNPC_2"));
@@ -26,5 +26,10 @@ Condition* UConditionRepository::GetCondition(const FString& name) const
 
 bool Condition::IsTrue(ASmartZone* pSmartZone)
 {
-	return pSmartZone ? m_Function(pSmartZone) : false;
+	bool isTrue = false;
+	
+	if (pSmartZone)
+		isTrue = m_Function(pSmartZone);
+
+	return isTrue;
 }
