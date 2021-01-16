@@ -38,10 +38,9 @@ public:
 		void AddRole(const FRole& role);
 
 	bool AssignRoles(const TArray<class ANPCCharacter*>& pNPCs);
+	bool AssignRandomRole(class ANPCCharacter* pNPC, bool isDynamic);
 
 private:
-	bool AssignRandomRole(class ANPCCharacter* pNPC);
-
 	TArray<FRole> m_Roles;
 };
 

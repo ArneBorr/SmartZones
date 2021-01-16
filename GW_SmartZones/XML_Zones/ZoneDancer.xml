@@ -17,7 +17,7 @@
   
   <Trigger>
 		<NrOfConditions>1</NrOfConditions>	
-		<Condition0> MinNPC_2</Condition0>
+		<Condition0> MinNPC_1</Condition0>
    </Trigger>
    
    <Actors>

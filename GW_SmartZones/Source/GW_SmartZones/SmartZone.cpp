@@ -30,17 +30,21 @@ void ASmartZone::Tick(float elapsedSec)
 
 	bool hasScanned = false;
 
+	m_ScanTimer += elapsedSec;
+
 	if (!m_IsActive)
 	{
-		m_ScanTimer += elapsedSec;
-
 		if (m_ScanTimer >= m_ScanInterval)
 		{
-			FVector boxExtent{}, origin{};
-			GetActorBounds(false, origin, boxExtent);
-			DrawDebugBox(GetWorld(), GetActorLocation(), boxExtent, FColor::Yellow, false, 0.5f, 0, 5);
-
+			if (m_IsInDebugMode)
+			{
+				FVector boxExtent{}, origin{};
+				GetActorBounds(false, origin, boxExtent);
+				DrawDebugBox(GetWorld(), GetActorLocation(), boxExtent, FColor::Yellow, false, 0.5f, 0, 5);
+			}
+			
 			m_ScanTimer = 0;
+
 			if (m_pTriggerManager->IsTriggerTriggered())
 			{
 				if (m_pRoleManager->AssignRoles(m_pNPCsInZone))
@@ -53,6 +57,22 @@ void ASmartZone::Tick(float elapsedSec)
 	}
 	else
 	{
+		if (m_ScanTimer >= m_ScanInterval)
+		{
+			m_ScanTimer = 0;
+			for (int i{}; i < m_pDynamicNPCsInZone.Num(); i++)
+			{
+				if (m_pRoleManager->AssignRandomRole(m_pDynamicNPCsInZone[i], true))
+				{
+					m_pTimeline->AddDynamicNPC(this, m_pDynamicNPCsInZone[i]);
+					m_pNPCsInZone.Add(m_pDynamicNPCsInZone[i]);
+				}
+
+				m_pDynamicNPCsInZone.RemoveAt(i);
+				--i;
+			}
+		}
+
 		if (!m_pTimeline->Update(this, elapsedSec))
 		{
 			m_IsCompleted = true;
@@ -63,7 +83,6 @@ void ASmartZone::Tick(float elapsedSec)
 	{
 		FVector boxExtent{}, origin{};
 		GetActorBounds(false, origin, boxExtent);
-		//DrawDebugBox(GetWorld(), GetActorLocation(), boxExtent, m_IsActive ? FColor::Green : FColor::Red, true, -1, 0, 5);
 	}
 }
 
@@ -72,8 +91,17 @@ void ASmartZone::OnOverlapBegin(AActor* pOverlappedActor, AActor* pOtherActor)
 	if (pOtherActor->ActorHasTag("NPC"))
 	{
 		ANPCCharacter* pTemp = Cast<ANPCCharacter>(pOtherActor);
-		if(pTemp)
-			m_pNPCsInZone.Add(pTemp);
+		if (pTemp)
+		{
+			if (m_IsActive && !m_pDynamicNPCsInZone.Contains(pTemp))
+			{	
+				m_pDynamicNPCsInZone.Add(pTemp);
+			}
+			else if (!m_IsActive && !m_pNPCsInZone.Contains(pTemp))
+			{
+				m_pNPCsInZone.Add(pTemp);
+			}
+		}
 
 		if (m_IsInDebugMode)
 			UE_LOG(LogTemp, Warning, TEXT("ASmartZone::OnOverlapEnd : NPC Entered"));
@@ -83,11 +111,17 @@ void ASmartZone::OnOverlapBegin(AActor* pOverlappedActor, AActor* pOtherActor)
 
 void ASmartZone::OnOverlapEnd(AActor* pOverlappedActor, AActor* pOtherActor)
 {
+	if (!m_IsActive)
+		return; // When active, deletion of dynamic NPCs are handled in the update function
 	if (pOtherActor->ActorHasTag("NPC"))
 	{
 		ANPCCharacter* pTemp = Cast<ANPCCharacter>(pOtherActor);
+
 		if (pTemp)
-			m_pNPCsInZone.Remove(pTemp);
+		{	
+			
+			m_pNPCsInZone.Remove(pTemp);			
+		}
 
 		if (m_IsInDebugMode)
 			UE_LOG(LogTemp, Warning, TEXT("ASmartZone::OnOverlapEnd : NPC Exited"));		

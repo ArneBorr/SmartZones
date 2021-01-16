@@ -21,15 +21,14 @@ public:
 		void Initialize(class UAnimationAsset* pAnim, const FString& name, const FString& action, TransitionType transType, float duration, int seq);
 
 	void Execute(class ANPCCharacter* pNPC, class ASmartZone* pSmartZone);
-	void Exit();
-	bool IsCompleted();
+	void Exit(class ANPCCharacter* pNPC);
+	bool IsCompleted(class ANPCCharacter* pNPC);
 
 	int GetSequence() const { return m_Sequence; };
 private:
 	FString m_Name;
 	FString m_Action;
 	FTimerHandle m_TimerHandle;
-	class ANPCCharacter* m_pNPC = nullptr;
 	class UAnimationAsset* m_pAnimation = nullptr;
 	TransitionType m_TransType;
 	float m_Duration;
@@ -49,8 +48,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 		void AddBehaviour(UTimelineBehaviorSZ* pBehavior) { if (pBehavior) m_pBehaviors.Add(pBehavior); };
 
-	void AddNPC(ANPCCharacter* pNPC);
+	void AddNPC(class ANPCCharacter* pNPC);
 	bool StartSequence(class ASmartZone* pSmartZone, int seq);
+	void StartBehaviorSingleNPC(class ANPCCharacter* pNPC, class ASmartZone* pSmartZone);
 	void EndBehavior();
 	bool IsSequenceCompleted();
 	const FString& GetName() { return m_Name; };
@@ -72,6 +72,7 @@ public:
 		void AddRow(UTimelineRowSZ* pRow) { if (pRow) m_pRows.Add(pRow); };
 
 	void Start(const TArray<class ANPCCharacter*>& pNPCsInZone, class ASmartZone* pSmartZone);
+	void AddDynamicNPC(class ASmartZone* pSmartZone, class ANPCCharacter* pNPC);
 	bool Update(class ASmartZone* pSmartZone, float elapsedSec);
 private:
 	TArray<UTimelineRowSZ*> m_pRows;

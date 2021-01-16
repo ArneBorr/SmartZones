@@ -19,8 +19,7 @@ void UTimelineBehaviorSZ::Initialize(UAnimationAsset* pAnim, const FString& name
 }
 
 void UTimelineBehaviorSZ::Execute(ANPCCharacter* pNPC, ASmartZone* pSmartZone)
-{
-	m_pNPC = pNPC;
+{;
 	pNPC->SetAction(pSmartZone, m_Action);
 	if (m_pAnimation)
 	{
@@ -31,11 +30,11 @@ void UTimelineBehaviorSZ::Execute(ANPCCharacter* pNPC, ASmartZone* pSmartZone)
 		GetWorld()->GetTimerManager().SetTimer(m_TimerHandle, this, &UTimelineBehaviorSZ::UpdateTimer, 1, true, 0);
 }
 
-void UTimelineBehaviorSZ::Exit()
+void UTimelineBehaviorSZ::Exit(ANPCCharacter* pNPC)
 {
 	if (m_pAnimation)
 	{
-		m_pNPC->ContinueAnimBlueprint();
+		pNPC->ContinueAnimBlueprint();
 	}
 }
 
@@ -44,23 +43,19 @@ void UTimelineBehaviorSZ::UpdateTimer()
 	m_Timer += 1;
 }
 
-bool UTimelineBehaviorSZ::IsCompleted()
+bool UTimelineBehaviorSZ::IsCompleted(ANPCCharacter* pNPC)
 {
 	switch (m_TransType)
 	{
 		case TransitionType::EndOfAction:
-			m_pNPC->IsBehaviorCompleted();
-			break;
+			return pNPC->IsBehaviorCompleted();
 		case TransitionType::EndOfDuration:
-			UE_LOG(LogTemp, Warning, TEXT("%f"), m_Timer);
 			return m_Duration <= m_Timer;
-			break;
 		case TransitionType::EndOfSequence:;
 			return false;
-			break;
 	}
 
-	return m_pNPC->IsBehaviorCompleted();
+	return false;
 }
 
 //Row
@@ -106,15 +101,40 @@ bool UTimelineRowSZ::StartSequence(ASmartZone* pSmartZone, int seq)
 	return true;
 }
 
+void UTimelineRowSZ::StartBehaviorSingleNPC(ANPCCharacter* pNPC, ASmartZone* pSmartZone)
+{
+	if (m_pActiveBehavior)
+	{
+		m_pActiveBehavior->Execute(pNPC, pSmartZone);
+		pNPC->SetInteracting(true);
+	}
+}
+
 void UTimelineRowSZ::EndBehavior()
 {
 	if (m_pActiveBehavior)
-		m_pActiveBehavior->Exit();
+	{
+		for (ANPCCharacter* pNPC : m_pNPCs)
+		{
+			m_pActiveBehavior->Exit(pNPC);
+		}
+		
+		m_pActiveBehavior = nullptr;
+	}
 }
 
 bool UTimelineRowSZ::IsSequenceCompleted()
 {
-	return m_pActiveBehavior ?  m_pActiveBehavior->IsCompleted() : false;
+	bool isSequenceCompleted = false;
+	if (m_pActiveBehavior)
+	{	
+		for (ANPCCharacter* pNPC : m_pNPCs)
+		{
+			isSequenceCompleted |= m_pActiveBehavior->IsCompleted(pNPC);
+		}
+	}
+
+	return isSequenceCompleted;
 }
 
 //Timeline
@@ -138,15 +158,27 @@ void UTimelineSZ::Start(const TArray<ANPCCharacter*>& pNPCsInZone, ASmartZone* p
 	}
 }
 
-bool UTimelineSZ::Update(class ASmartZone* pSmartZone, float elapsedSec)
+void UTimelineSZ::AddDynamicNPC(class ASmartZone* pSmartZone, ANPCCharacter* pNPC)
 {
-	bool isRowCompleted = false;
 	for (UTimelineRowSZ* pRow : m_pRows)
 	{
-		isRowCompleted |= pRow->IsSequenceCompleted();
+		if (pNPC->GetRole().Name == pRow->GetName())
+		{
+			pRow->AddNPC(pNPC);
+			pRow->StartBehaviorSingleNPC(pNPC, pSmartZone);
+		}
+	}
+}
+
+bool UTimelineSZ::Update(class ASmartZone* pSmartZone, float elapsedSec)
+{
+	bool isSequenceCompleted = false;
+	for (UTimelineRowSZ* pRow : m_pRows)
+	{
+		isSequenceCompleted |= pRow->IsSequenceCompleted();
 	}
 
-	if (isRowCompleted)
+	if (isSequenceCompleted)
 	{
 		++m_CurrentSequence; 
 		bool shouldTimelineContinue = false;

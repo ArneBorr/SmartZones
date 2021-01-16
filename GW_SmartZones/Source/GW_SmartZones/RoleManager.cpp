@@ -48,36 +48,44 @@ bool URoleManager::AssignRoles(const TArray<ANPCCharacter*>& pNPCs)
 		// Assign random roles to NPCs when min Cardinality has been reached
 		else
 		{
-			if (!AssignRandomRole(pNPCs[i]))
+			if (!AssignRandomRole(pNPCs[i], false))
 				return false;
 		}
 	}
 
 	//Return false when not all roles have their min cardinality achieved
-	if (currentIndex < m_Roles.Num() - 1 || m_Roles.Last().CardinalityMin > m_Roles.Last().CurrentNrOfNPCsWithThisRole)
+
+	for (int i{ currentIndex }; i < m_Roles.Num(); i++)
 	{
-		return false;
+		if (m_Roles[i].CardinalityMin > m_Roles[i].CurrentNrOfNPCsWithThisRole)
+			return false;
 	}
 
 	return true;
 }
 
-bool URoleManager::AssignRandomRole(ANPCCharacter* pNPC)
+bool URoleManager::AssignRandomRole(ANPCCharacter* pNPC, bool isDynamic)
 {
 	int currentIndex = FMath::RandRange(0, m_Roles.Num() - 1);
 	FRole& currentRole = m_Roles[currentIndex];
 
 	unsigned int tries = 0;
-	while (currentRole.CardinalityMax <= currentRole.CurrentNrOfNPCsWithThisRole)
+
+	
+	auto getRandomRole = [&tries, &currentIndex,  &currentRole ,this]()
 	{
 		currentIndex = FMath::RandRange(0, m_Roles.Num() - 1);
 		currentRole = m_Roles[currentIndex];
+	};
+
+	while (currentRole.CardinalityMax <= currentRole.CurrentNrOfNPCsWithThisRole && (isDynamic ? !currentRole.CanJoinDynamically : true))
+	{
+		getRandomRole();
 		++tries;
 		if (tries > 20)
-		{
 			return false;
-		}
 	}
+	
 
 	pNPC->SetRole(currentRole);
 	pNPC->SetInteracting(true);

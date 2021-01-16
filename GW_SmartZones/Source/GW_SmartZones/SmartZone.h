@@ -29,6 +29,7 @@ public:
 
 private:
 	TArray<class ANPCCharacter*> m_pNPCsInZone;
+	TArray<class ANPCCharacter*> m_pDynamicNPCsInZone;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "General", DisplayName = "Role Manager", meta = (AllowPrivateAccess = true))
 		URoleManager* m_pRoleManager;
