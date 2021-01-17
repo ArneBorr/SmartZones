@@ -22,20 +22,21 @@ public:
 
 	void Execute(class ANPCCharacter* pNPC, class ASmartZone* pSmartZone);
 	void Exit(class ANPCCharacter* pNPC);
-	bool IsCompleted(class ANPCCharacter* pNPC);
+	bool Update(class ANPCCharacter* pNPC, float elapsedSec);
 
 	int GetSequence() const { return m_Sequence; };
+	bool HasAnim() const { return m_pAnimation ? true : false; }; 
+	UFUNCTION(BlueprintCallable)
+		class UAnimationAsset* GetAnim() { return m_pAnimation; };
+
 private:
 	FString m_Name;
 	FString m_Action;
-	FTimerHandle m_TimerHandle;
 	class UAnimationAsset* m_pAnimation = nullptr;
 	TransitionType m_TransType;
 	float m_Duration;
 	float m_Timer = 0;
 	int m_Sequence;
-
-	void UpdateTimer();
 };
 
 UCLASS(BlueprintType)
@@ -52,7 +53,7 @@ public:
 	bool StartSequence(class ASmartZone* pSmartZone, int seq);
 	void StartBehaviorSingleNPC(class ANPCCharacter* pNPC, class ASmartZone* pSmartZone);
 	void EndBehavior();
-	bool IsSequenceCompleted();
+	bool Update(float elapsedSec);
 	const FString& GetName() { return m_Name; };
 
 private:

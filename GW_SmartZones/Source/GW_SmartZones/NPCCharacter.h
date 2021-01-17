@@ -14,6 +14,7 @@ public:
 	ANPCCharacter();
 	void SetRole(const FRole& role);
 	void SetInteracting(bool isInteracting);
+	void SetCurrentBehavior(class UTimelineBehaviorSZ* pBeh);
 
 	UFUNCTION(BlueprintNativeEvent)
 		void SetAction(class ASmartZone* pSmartZone, const FString& action);
@@ -23,7 +24,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 		const FRole& GetRole();
 	UFUNCTION(BlueprintCallable)
-		bool IsInteracting();
+		bool IsInteracting() const;
+	UFUNCTION(BlueprintCallable)
+		bool HasBehaviorAnim() const;
 	
 	bool IsBehaviorCompleted() const;
 	void SetBehaviorCompleted(bool isCompleted);
@@ -35,7 +38,7 @@ protected:
 
 private:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-		AActor* m_pTarget = nullptr;
+		class UTimelineBehaviorSZ* m_pBehavior = nullptr;
 	FRole m_Role;
 	bool m_IsInteracting = false;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))

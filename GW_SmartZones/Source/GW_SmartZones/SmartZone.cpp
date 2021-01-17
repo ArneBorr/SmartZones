@@ -57,7 +57,7 @@ void ASmartZone::Tick(float elapsedSec)
 	}
 	else
 	{
-		if (m_ScanTimer >= m_ScanInterval)
+		if (m_ScanTimer >= m_DynamicScanInterval)
 		{
 			m_ScanTimer = 0;
 			for (int i{}; i < m_pDynamicNPCsInZone.Num(); i++)

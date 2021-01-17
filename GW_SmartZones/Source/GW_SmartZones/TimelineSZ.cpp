@@ -21,35 +21,29 @@ void UTimelineBehaviorSZ::Initialize(UAnimationAsset* pAnim, const FString& name
 void UTimelineBehaviorSZ::Execute(ANPCCharacter* pNPC, ASmartZone* pSmartZone)
 {;
 	pNPC->SetAction(pSmartZone, m_Action);
+	pNPC->SetCurrentBehavior(this);
 	if (m_pAnimation)
 	{
-		pNPC->GetMesh()->PlayAnimation(m_pAnimation, true);
+		//pNPC->GetMesh()->PlayAnimation(m_pAnimation, true);
 	}
-
-	if (m_TransType == TransitionType::EndOfDuration)
-		GetWorld()->GetTimerManager().SetTimer(m_TimerHandle, this, &UTimelineBehaviorSZ::UpdateTimer, 1, true, 0);
 }
 
 void UTimelineBehaviorSZ::Exit(ANPCCharacter* pNPC)
 {
 	if (m_pAnimation)
 	{
-		pNPC->ContinueAnimBlueprint();
+		//pNPC->ContinueAnimBlueprint();
 	}
 }
 
-void UTimelineBehaviorSZ::UpdateTimer()
-{
-	m_Timer += 1;
-}
-
-bool UTimelineBehaviorSZ::IsCompleted(ANPCCharacter* pNPC)
+bool UTimelineBehaviorSZ::Update(ANPCCharacter* pNPC, float elapsedSec)
 {
 	switch (m_TransType)
 	{
 		case TransitionType::EndOfAction:
 			return pNPC->IsBehaviorCompleted();
 		case TransitionType::EndOfDuration:
+			m_Timer += elapsedSec;
 			return m_Duration <= m_Timer;
 		case TransitionType::EndOfSequence:;
 			return false;
@@ -123,14 +117,14 @@ void UTimelineRowSZ::EndBehavior()
 	}
 }
 
-bool UTimelineRowSZ::IsSequenceCompleted()
+bool UTimelineRowSZ::Update(float elapsedSec)
 {
 	bool isSequenceCompleted = false;
 	if (m_pActiveBehavior)
 	{	
 		for (ANPCCharacter* pNPC : m_pNPCs)
 		{
-			isSequenceCompleted |= m_pActiveBehavior->IsCompleted(pNPC);
+			isSequenceCompleted |= m_pActiveBehavior->Update(pNPC, elapsedSec);
 		}
 	}
 
@@ -175,7 +169,7 @@ bool UTimelineSZ::Update(class ASmartZone* pSmartZone, float elapsedSec)
 	bool isSequenceCompleted = false;
 	for (UTimelineRowSZ* pRow : m_pRows)
 	{
-		isSequenceCompleted |= pRow->IsSequenceCompleted();
+		isSequenceCompleted |= pRow->Update(elapsedSec);
 	}
 
 	if (isSequenceCompleted)

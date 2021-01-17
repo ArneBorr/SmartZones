@@ -41,10 +41,24 @@
 				<TransitionType>EndOfAction</TransitionType>
             </Behavior>
 			<Behavior>
-                <Duration>20</Duration>
+                <Duration>15</Duration>
                 <Name>Dance</Name>
                 <Animation>Dance</Animation>
 				<Sequence>3</Sequence>
+				<TransitionType>EndOfDuration</TransitionType>
+            </Behavior>
+			<Behavior>
+                <Duration>3</Duration>
+                <Name>Bow</Name>
+                <Animation>Bow</Animation>
+				<Sequence>4</Sequence>
+				<TransitionType>EndOfDuration</TransitionType>
+            </Behavior>
+			<Behavior>
+                <Duration>3</Duration>
+                <Name>Wave</Name>
+                <Animation>Wave</Animation>
+				<Sequence>5</Sequence>
 				<TransitionType>EndOfDuration</TransitionType>
             </Behavior>
         </Row>
@@ -55,6 +69,20 @@
                 <Animation>Cheering</Animation>
 				<Action>Face_LocDancer</Action>
 				<Sequence>3</Sequence>
+				<TransitionType>EndOfSequence</TransitionType>
+            </Behavior>
+			<Behavior>
+                <Name>Clap</Name>
+                <Animation>Clap</Animation>
+				<Action>Face_LocDancer</Action>
+				<Sequence>4</Sequence>
+				<TransitionType>EndOfSequence</TransitionType>
+            </Behavior>
+			<Behavior>
+                <Name>Clap</Name>
+                <Animation>Clap</Animation>
+				<Action>Face_LocDancer</Action>
+				<Sequence>5</Sequence>
 				<TransitionType>EndOfSequence</TransitionType>
             </Behavior>
         </Row>

@@ -1,5 +1,6 @@
 
 #include "NPCCharacter.h"
+#include "TimelineSZ.h"
 
 ANPCCharacter::ANPCCharacter()
 {
@@ -29,6 +30,11 @@ void ANPCCharacter::SetInteracting(bool isInteracting)
 	m_IsInteracting = isInteracting;
 }
 
+void ANPCCharacter::SetCurrentBehavior(UTimelineBehaviorSZ* pBeh)
+{
+	m_pBehavior = pBeh;
+}
+
 void ANPCCharacter::SetAction_Implementation(class ASmartZone* pSmartZone, const FString& action)
 {
 	//Implementation that gets called, if not overriden by Blueprint class
@@ -44,9 +50,14 @@ const FRole& ANPCCharacter::GetRole()
 	return m_Role;
 }
 
-bool ANPCCharacter::IsInteracting()
+bool ANPCCharacter::IsInteracting() const
 {
 	return m_IsInteracting;
+}
+
+bool ANPCCharacter::HasBehaviorAnim() const
+{
+	return m_pBehavior ? m_pBehavior->HasAnim() : false;
 }
 
 bool ANPCCharacter::IsBehaviorCompleted() const

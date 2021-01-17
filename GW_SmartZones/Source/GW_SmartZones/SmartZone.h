@@ -38,8 +38,10 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "General", DisplayName = "Time Line", meta = (AllowPrivateAccess = true))
 		UTimelineSZ* m_pTimeline;
 
-	UPROPERTY(EditAnywhere, Category = "General", DisplayName = "Debug Mode", meta = (AllowPrivateAccess = true))
+	UPROPERTY(EditAnywhere, Category = "General", DisplayName = "Scan Interval", meta = (AllowPrivateAccess = true))
 		float m_ScanInterval = 0.5f;
+	UPROPERTY(EditAnywhere, Category = "General", DisplayName = "Dynamic Scan Interval", meta = (AllowPrivateAccess = true))
+		float m_DynamicScanInterval = 1.f;
 
 	float m_ScanTimer = 0;
 
